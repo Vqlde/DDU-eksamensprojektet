@@ -12,6 +12,7 @@ public class RogueMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private bool isGrounded;
+    public Animator animator;
 
 
     void Start()
@@ -41,6 +42,7 @@ public class RogueMovement : MonoBehaviour
 
             // Move the player horizontally
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
 
         // Jump if "W" or "Space" is pressed and the player is grounded
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded || Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
