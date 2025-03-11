@@ -25,33 +25,28 @@ public class RogueMovement : MonoBehaviour
     void Update()
     {
 
-        // Move input from left/right arrows or "A" and "D" keys
         float moveInput = Input.GetAxisRaw("Horizontal");
 
 
 
-        // Flip the sprite based on the movement direction
         if (moveInput > 0)
         {
-            spriteRenderer.flipX = false;  // Face right (default direction)
+            spriteRenderer.flipX = false;
         }
         else if (moveInput < 0)
         {
-            spriteRenderer.flipX = true;   // Face left (flipped direction)
+            spriteRenderer.flipX = true;
         }
 
-            // Move the player horizontally
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
         animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
 
-        // Jump if "W" or "Space" is pressed and the player is grounded
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded || Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);  // Jump
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
 
-            // Ground check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
     }
