@@ -13,6 +13,7 @@ public class RogueMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     public Animator animator;
+    private bool doubleJumpAvailable;
 
 
     void Start()
@@ -41,13 +42,24 @@ public class RogueMovement : MonoBehaviour
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
         animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded || Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if (isGrounded == true) {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                doubleJumpAvailable = true;
+            } else {
+                if (doubleJumpAvailable == true) {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    doubleJumpAvailable = false;
+                }
+            }
+
+
+            //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
 
     }
 }
