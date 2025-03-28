@@ -6,9 +6,19 @@ public class MinionScript : MonoBehaviour
 {
     public int maxHealth = 100;
     int currentHealth;
+    public float attackInterval = 5f;
+    private float nextAttackTime = 0f;
+    public Animator animator;
+    public GameObject fireballPrefab;
+    public Transform firePoint;
+    private Transform player;
+
+    public float delaytime;
+
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         currentHealth = maxHealth;
     }
 
@@ -22,9 +32,37 @@ public class MinionScript : MonoBehaviour
         }
     }
 
-    void Update()
+
+
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                Debug.Log("Angreb");
+                animator.SetTrigger("Attack");
+                nextAttackTime = Time.time + attackInterval;
+                // delay - attack skal matche tidsmæssigt med sprite no. 5 i animationen?
+                Attack();
+
+            }
+        }
+    }
+
+
+
+
+    void Attack()
     {
 
+        Vector2 targetPosition = player.position;
+        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+
+        fireball.GetComponent<Fireball>().SetTarget(targetPosition);
+        //Instantiate(fireballPrefab, firePoint.position, firePoint.rotation);
+        Debug.Log("Fireball");
     }
 
 
