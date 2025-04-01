@@ -15,12 +15,40 @@ public class MinionScript : MonoBehaviour
 
     public float delaytime;
 
+    public float moveDistance = 5.0f;
+    public float moveSpeed = 2.0f;
+
+    private Vector3 startPosition;
+    private bool movingUp = true;
+
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentHealth = maxHealth;
+        startPosition = transform.position;
     }
+
+    private void Update()
+    {
+        if (movingUp)
+        {
+            transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+            if (transform.position.y >= startPosition.y + moveDistance)
+            {
+                movingUp = false;
+            }
+        }
+        else
+        {
+            transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+            if (transform.position.y <= startPosition.y - moveDistance)
+            {
+                movingUp = true;
+            }
+        }
+    }
+
 
     public void Damage(int Damage)
     {
