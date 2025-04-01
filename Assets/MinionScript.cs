@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MinionScript : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth = 1000;
     int currentHealth;
     public float attackInterval = 5f;
     private float nextAttackTime = 0f;
@@ -56,6 +56,8 @@ public class MinionScript : MonoBehaviour
         if (currentHealth <= 0)
         {
             //animation
+            Debug.Log("Minion døde");
+            gameObject.SetActive(false);
 
         }
     }
@@ -69,7 +71,6 @@ public class MinionScript : MonoBehaviour
         {
             if (Time.time >= nextAttackTime)
             {
-                Debug.Log("Angreb");
                 animator.SetTrigger("Attack");
                 nextAttackTime = Time.time + attackInterval;
                 // delay - attack skal matche tidsmæssigt med sprite no. 5 i animationen?
@@ -89,8 +90,6 @@ public class MinionScript : MonoBehaviour
         GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
 
         fireball.GetComponent<Fireball>().SetTarget(targetPosition);
-        //Instantiate(fireballPrefab, firePoint.position, firePoint.rotation);
-        Debug.Log("Fireball");
     }
 
 

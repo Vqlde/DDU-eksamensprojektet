@@ -4,13 +4,15 @@ public class Fireball : MonoBehaviour
 {
     public float speed = 5f;
     public float lifetime = 3f;
-    public int damage = 10;
+    public int damage = 25;
+    public Transform player;
 
     private Vector2 targetPosition;
     private Vector2 moveDirection;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         Destroy(gameObject, lifetime);
     }
 
@@ -31,7 +33,8 @@ public class Fireball : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Skade til player");
+            player.GetComponent<PlayerLogic>().Damage(damage);
+      
             Destroy(gameObject);
         }
     }
