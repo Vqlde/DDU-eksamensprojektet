@@ -276,3 +276,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackDamage: 50
+  endscreen: {fileID: 0}

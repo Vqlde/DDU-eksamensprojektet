@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class PlayerLogic : MonoBehaviour
     {
         Health = maxHealth; 
         isAttacking = false;
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        endscreen = GameObject.FindWithTag("EndScreen");
     }
 
     // Update is called once per frame

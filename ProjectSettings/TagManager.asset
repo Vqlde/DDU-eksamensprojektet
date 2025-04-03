@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Logic
   - Rogue
+  - EndScreen
   layers:
   - Default
   - TransparentFX
