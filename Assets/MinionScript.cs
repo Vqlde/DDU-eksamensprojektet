@@ -20,33 +20,41 @@ public class MinionScript : MonoBehaviour
 
     private Vector3 startPosition;
     private bool movingUp = true;
+    public float yOffset;
 
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        currentHealth = maxHealth;
-        startPosition = transform.position;
+    player = GameObject.FindGameObjectWithTag("Player").transform;
+    currentHealth = maxHealth;
+    startPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+    Debug.Log(gameObject.name + " Spawned at: " + transform.position.y);
     }
 
-    private void Update()
+    void Update()
     {
-        if (movingUp)
+    float newY = transform.position.y;
+
+    if (movingUp)
+    {
+        newY += moveSpeed * Time.deltaTime;
+        if (newY >= startPosition.y + moveDistance)
         {
-            transform.position += Vector3.up * moveSpeed * Time.deltaTime;
-            if (transform.position.y >= startPosition.y + moveDistance)
-            {
-                movingUp = false;
-            }
+            newY = startPosition.y + moveDistance; // Prevent overshooting
+            movingUp = false;
         }
-        else
+    }
+    else
+    {
+        newY -= moveSpeed * Time.deltaTime;
+        if (newY <= startPosition.y - moveDistance)
         {
-            transform.position += Vector3.down * moveSpeed * Time.deltaTime;
-            if (transform.position.y <= startPosition.y - moveDistance)
-            {
-                movingUp = true;
-            }
+            newY = startPosition.y - moveDistance; // Prevent overshooting
+            movingUp = true;
         }
+    }
+
+    transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
 
@@ -56,7 +64,7 @@ public class MinionScript : MonoBehaviour
         if (currentHealth <= 0)
         {
             //animation
-            Debug.Log("Minion døde");
+            Debug.Log("Minion dï¿½de");
             gameObject.SetActive(false);
 
         }
@@ -73,7 +81,7 @@ public class MinionScript : MonoBehaviour
             {
                 animator.SetTrigger("Attack");
                 nextAttackTime = Time.time + attackInterval;
-                // delay - attack skal matche tidsmæssigt med sprite no. 5 i animationen?
+                // delay - attack skal matche tidsmï¿½ssigt med sprite no. 5 i animationen?
                 Attack();
 
             }
