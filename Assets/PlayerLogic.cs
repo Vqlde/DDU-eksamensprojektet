@@ -22,7 +22,7 @@ public class PlayerLogic : MonoBehaviour
     private GameObject healthBarObject;
 
 
-    public float attackRate = 1.5f;
+    public float attackRate = 1f;
     float nextAttackTime = 0f;
 
     // Start is called before the first frame update
@@ -46,22 +46,31 @@ public class PlayerLogic : MonoBehaviour
             if (Input.GetKey(KeyCode.Mouse0))
             {
                 animator.SetTrigger("Attack");
-                nextAttackTime = Time.time + attackRate;
-                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-                foreach (Collider2D enemy in hitEnemies)
-                {
-                    if (enemy is CapsuleCollider2D)
-                    {
-                        Debug.Log("Ramte" + enemy.name);
-                        enemy.GetComponent<MinionScript>().Damage(attackDamage);
-                    }
-
-                }
+                nextAttackTime = Time.time + 1f / attackRate;
+         
+                StartCoroutine(StartChar());
+                
 
             }
 
         }
         
+    }
+
+    private IEnumerator StartChar()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Debug.Log("Attack tid");
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy is CapsuleCollider2D)
+            {
+                enemy.GetComponent<MinionScript>().Damage(attackDamage);
+                Debug.Log("Du damagede " + enemy + "for " + attackDamage);
+            }
+
+        }
     }
     void OnDrawGizmosSelected()
     {

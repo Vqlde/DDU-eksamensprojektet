@@ -22,13 +22,18 @@ public class MinionScript : MonoBehaviour
     private bool movingUp = true;
     public float yOffset;
 
+    private SpriteRenderer spriteRenderer;
+    public Color normalColor = Color.black;
+    public Color dmgColor = Color.red;
+
 
     void Start()
     {
-    player = GameObject.FindGameObjectWithTag("Player").transform;
-    currentHealth = maxHealth;
-    startPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
-    Debug.Log(gameObject.name + " Spawned at: " + transform.position.y);
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentHealth = maxHealth;
+        startPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+        Debug.Log(gameObject.name + " Spawned at: " + transform.position.y);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -66,8 +71,15 @@ public class MinionScript : MonoBehaviour
             //animation
             Debug.Log("Minion døde");
             gameObject.SetActive(false);
+            spriteRenderer.color = dmgColor;
+            StartCoroutine(ColorAwait());
 
         }
+    }
+    private IEnumerator ColorAwait()
+    {
+        yield return new WaitForSeconds(0.3f);
+        spriteRenderer.color = normalColor;
     }
 
 
