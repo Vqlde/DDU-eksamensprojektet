@@ -4,7 +4,7 @@ public class Fireball : MonoBehaviour
 {
     public float speed = 5f;
     public float lifetime = 3f;
-    public int damage = 25;
+    public int damage = 1;
     public Transform player;
 
     private Vector2 targetPosition;

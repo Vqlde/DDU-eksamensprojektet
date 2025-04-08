@@ -14,6 +14,7 @@ public class RogueMovement : MonoBehaviour
     private bool isGrounded;
     public Animator animator;
     private bool doubleJumpAvailable;
+    public bool isAlive = true;
 
 
     void Start()
@@ -30,19 +31,23 @@ public class RogueMovement : MonoBehaviour
 
 
 
-        if (moveInput > 0)
+        if (moveInput > 0 && isAlive)
         {
             spriteRenderer.flipX = false;
         }
-        else if (moveInput < 0)
+        else if (moveInput < 0 && isAlive)
         {
             spriteRenderer.flipX = true;
         }
+        if (isAlive)
+        {
+            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
+        }
 
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
+
+        if (Input.GetKeyDown(KeyCode.Space) && isAlive) {
             if (isGrounded == true) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 doubleJumpAvailable = true;

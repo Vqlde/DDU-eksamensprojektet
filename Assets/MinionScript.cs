@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MinionScript : MonoBehaviour
 {
-    public int maxHealth = 1000;
+    public int maxHealth = 100;
     int currentHealth;
     public float attackInterval = 5f;
     private float nextAttackTime = 0f;
@@ -15,8 +15,8 @@ public class MinionScript : MonoBehaviour
 
     public float delaytime;
 
-    public float moveDistance = 5.0f;
-    public float moveSpeed = 2.0f;
+    public float moveDistance = 1.25f;
+    public float moveSpeed = 1.5f;
 
     private Vector3 startPosition;
     private bool movingUp = true;
@@ -33,28 +33,28 @@ public class MinionScript : MonoBehaviour
 
     void Update()
     {
-    float newY = transform.position.y;
+        float newY = transform.position.y;
 
-    if (movingUp)
-    {
-        newY += moveSpeed * Time.deltaTime;
-        if (newY >= startPosition.y + moveDistance)
+        if (movingUp)
         {
-            newY = startPosition.y + moveDistance; // Prevent overshooting
-            movingUp = false;
+            newY += moveSpeed * Time.deltaTime;
+            if (newY >= startPosition.y + moveDistance)
+            {
+                newY = startPosition.y + moveDistance; // Stop exactly at the limit
+                movingUp = false;
+            }
         }
-    }
-    else
-    {
-        newY -= moveSpeed * Time.deltaTime;
-        if (newY <= startPosition.y - moveDistance)
+        else
         {
-            newY = startPosition.y - moveDistance; // Prevent overshooting
-            movingUp = true;
+            newY -= moveSpeed * Time.deltaTime;
+            if (newY <= startPosition.y - moveDistance)
+            {
+                newY = startPosition.y - moveDistance; // Stop exactly at the limit
+                movingUp = true;
+            }
         }
-    }
 
-    transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
 
@@ -64,7 +64,7 @@ public class MinionScript : MonoBehaviour
         if (currentHealth <= 0)
         {
             //animation
-            Debug.Log("Minion d�de");
+            Debug.Log("Minion døde");
             gameObject.SetActive(false);
 
         }

@@ -235,6 +235,7 @@ MonoBehaviour:
   groundCheck: {fileID: 2199626793460548156}
   groundCheckRadius: 0.2
   animator: {fileID: 8419518019663197882}
+  isAlive: 1
 --- !u!95 &8419518019663197882
 Animator:
   serializedVersion: 5
@@ -268,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8e6f185eff8154fa45c26fbe7e5c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 3
   animator: {fileID: 8419518019663197882}
   attackPoint: {fileID: 8114194401571369180}
   attackRange: 1
@@ -277,3 +278,10 @@ MonoBehaviour:
     m_Bits: 64
   attackDamage: 50
   endscreen: {fileID: 0}
+  HealthBar: {fileID: 0}
+  healthSprites:
+  - {fileID: 21300000, guid: c1e5644cc7d722e41a327f198a54d145, type: 3}
+  - {fileID: 21300000, guid: 17a213a2cfec6904cac5185a1509004c, type: 3}
+  - {fileID: 21300000, guid: 4c552ebd2c2e2f849b387dfad8b56dfe, type: 3}
+  - {fileID: 21300000, guid: 4d51f1ee338c4c74ba6bb253ec02e897, type: 3}
+  attackRate: 1.5
