@@ -37,5 +37,9 @@ public class Fireball : MonoBehaviour
       
             Destroy(gameObject);
         }
+        if (other.gameObject.layer == 3)
+        {
+            Destroy(gameObject);
+        }
     }
 }

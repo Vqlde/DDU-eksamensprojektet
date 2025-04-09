@@ -42,18 +42,29 @@ public class RogueMovement : MonoBehaviour
         if (isAlive)
         {
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-            animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
+            if (isGrounded)
+            {
+                animator.SetFloat("speed", Mathf.Abs(moveInput * moveSpeed));
+            }
+        }
+
+        if (isGrounded)
+        {
+            animator.SetBool("isJumping", !Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer));
         }
 
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && isAlive) {
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) && isAlive) {
             if (isGrounded == true) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 doubleJumpAvailable = true;
+                animator.SetBool("isJumping", !Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer));
             } else {
                 if (doubleJumpAvailable == true) {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    // double jump anim her
                     doubleJumpAvailable = false;
                 }
             }
@@ -64,6 +75,7 @@ public class RogueMovement : MonoBehaviour
 
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
 
 
     }
