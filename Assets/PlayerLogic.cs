@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class PlayerLogic : MonoBehaviour
 {
 
-    public int maxHealth = 3;
-    private int Health;
+
     private bool isAttacking;
     public Animator animator;
     public Transform attackPoint;
@@ -24,6 +23,10 @@ public class PlayerLogic : MonoBehaviour
 
     public float attackRate = 1f;
     float nextAttackTime = 0f;
+
+    public int maxHealth = 3;
+    private int Health;
+    private string character;
 
     // Start is called before the first frame update
     void Start()
@@ -45,16 +48,15 @@ public class PlayerLogic : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                animator.SetTrigger("Attack");
+                string character = PlayerPrefs.GetString("SelectedCharacter", "brute");
+                if (character == "rogue") {
+                    animator.SetTrigger("Attack");
+                }
                 nextAttackTime = Time.time + 1f / attackRate;
          
                 StartCoroutine(StartChar());
-                
-
             }
-
-        }
-        
+        } 
     }
 
     private IEnumerator StartChar()
@@ -94,7 +96,7 @@ public class PlayerLogic : MonoBehaviour
         HealthBar.sprite = healthSprites[Health];
         if (Health <= 0)
         {
-            Debug.Log("Spilleren døde");
+            Debug.Log("Spilleren dï¿½de");
             endscreen.SetActive(true);
             RogueMovement.isAlive = false;
         }
