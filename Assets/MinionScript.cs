@@ -23,7 +23,7 @@ public class MinionScript : MonoBehaviour
     public float yOffset;
 
     private SpriteRenderer spriteRenderer;
-    public Color normalColor = Color.black;
+    public Color normalColor = Color.white;
     public Color dmgColor = Color.red;
 
 
@@ -66,13 +66,13 @@ public class MinionScript : MonoBehaviour
     public void Damage(int Damage)
     {
         currentHealth -= Damage;
+        spriteRenderer.color = dmgColor;
+        StartCoroutine(ColorAwait());
         if (currentHealth <= 0)
         {
             //animation
             Debug.Log("Minion døde");
             gameObject.SetActive(false);
-            spriteRenderer.color = dmgColor;
-            StartCoroutine(ColorAwait());
 
         }
     }
@@ -93,7 +93,6 @@ public class MinionScript : MonoBehaviour
             {
                 animator.SetTrigger("Attack");
                 nextAttackTime = Time.time + attackInterval;
-                // delay - attack skal matche tidsm�ssigt med sprite no. 5 i animationen?
                 Attack();
 
             }
